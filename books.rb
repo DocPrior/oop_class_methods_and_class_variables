@@ -4,6 +4,8 @@ class Book
 
   @@on_loan = []
 
+
+
   attr_accessor :due_date
   def initialize(title, author, isbn)
     @title = title
@@ -11,27 +13,27 @@ class Book
     @isbn = isbn
   end
 
-  def borrow(book)
-    lent_out?(book)
-    if lent_out?(book) == true
+  def borrow
+    lent_out?
+    if lent_out? == true
       return false
     end
-    current_due_date = @due_date
+    @due_date = Book.current_due_date
     @@on_loan << self
     return true
   end
 
-  def return_to_library(book)
-    lent_out?(book)
-    if lent_out?(book) == false
+  def return_to_library
+    lent_out?
+    if lent_out? == false
       return false
     end
     @@on_shelf << self
     return true
   end
 
-  def lent_out?(book)
-    @@on_loan.include?(book)
+  def lent_out?
+    @@on_loan.include?(self)
   end
 
   def self.create(title, author, isbn)
@@ -41,14 +43,15 @@ class Book
   end
 
   def self.current_due_date
-    due_date = (Time.now + 60 * 60 * 24 * 10)
+    Time.now + 60 * 60 * 24 * 10
   end
 
   def self.overdue_books
     over_due = []
-    @@on_loan.each do |book|
+    @@on_loan.each do
       if @due_date < Time.now
-      over_due << self
+        over_due << self
+      end
     end
   end
 
@@ -64,3 +67,22 @@ class Book
     @@on_loan
   end
 end
+
+sister_outsider = Book.create("Sister Outsider", "Audre Lorde", "9781515905431")
+
+aint_i = Book.create("Ain't I a Woman?", "Bell Hooks", "9780896081307")
+
+if_they_come = Book.create("If They Come in the Morning", "Angela Y. Davis", "0893880221")
+
+puts Book.browse.inspect
+puts Book.browse.inspect
+puts Book.browse.inspect
+
+puts Book.available.inspect
+puts Book.borrowed.inspect
+
+puts sister_outsider.lent_out?
+puts sister_outsider.borrow
+puts sister_outsider.lent_out?
+puts sister_outsider.borrow
+puts sister_outsider.due_date

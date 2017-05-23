@@ -20,6 +20,7 @@ class Book
     end
     @due_date = Book.current_due_date
     @@on_loan << self
+    @@on_shelf.delete(self)
     return true
   end
 
@@ -29,6 +30,7 @@ class Book
       return false
     end
     @@on_shelf << self
+    @@on_loan.delete(self)
     return true
   end
 
@@ -48,11 +50,12 @@ class Book
 
   def self.overdue_books
     over_due = []
-    @@on_loan.each do
-      if @due_date < Time.now
+    @@on_loan.each do |book|
+      if book.due_date < Time.now
         over_due << self
       end
     end
+    over_due
   end
 
   def self.browse
@@ -86,3 +89,15 @@ puts sister_outsider.borrow
 puts sister_outsider.lent_out?
 puts sister_outsider.borrow
 puts sister_outsider.due_date
+
+puts Book.available.inspect
+puts Book.borrowed.inspect
+
+p "=================================="
+puts Book.overdue_books.inspect
+
+puts sister_outsider.return_to_library
+puts sister_outsider.lent_out?
+
+puts Book.available.inspect
+puts Book.borrowed.inspect

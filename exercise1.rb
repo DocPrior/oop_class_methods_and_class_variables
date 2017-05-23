@@ -34,3 +34,21 @@ class BankAccount
     return num
   end
 end
+
+
+my_account = BankAccount.create
+your_account = BankAccount.create
+puts my_account.balance
+puts BankAccount.total_funds
+my_account.deposit(200)
+your_account.deposit(1000)
+puts my_account.balance
+puts your_account.balance
+puts BankAccount.total_funds
+BankAccount.interest_time
+puts my_account.balance
+puts your_account.balance
+puts BankAccount.total_funds
+my_account.withdraw(50)
+puts my_account.balance
+puts BankAccount.total_funds

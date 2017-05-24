@@ -7,7 +7,11 @@ class Vampires
     @name = name
     @age = age
     @in_coffin = true
-    @drank_blood_today= true
+    @drank_blood_today = true
+  end
+
+  def drink_blood
+    @drank_blood_today = true
   end
 
   def self.create(name, age)
@@ -15,4 +19,5 @@ class Vampires
     @@coven << new_vampire
     new_vampire
   end
+
 end

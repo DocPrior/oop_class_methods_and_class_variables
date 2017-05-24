@@ -14,6 +14,10 @@ class Vampires
     @drank_blood_today = true
   end
 
+  def go_home
+    @in_coffin = true
+  end
+
   def self.create(name, age)
     new_vampire = Vampires.new(name, age)
     @@coven << new_vampire
@@ -45,14 +49,25 @@ end
 vamp1 = Vampires.create("Mac", 100)
 
 vamp2 = Vampires.create("Bob", 100)
+
 "====================="
+
 puts Vampires.all.inspect
 
 Vampires.sunset
 
 puts Vampires.all.inspect
-# vamp2.drink_blood
-#
-# Vampires.sunrise
-# "=================="
-# puts Vampires.all.inspect
+
+vamp2.drink_blood
+
+vamp2.go_home
+vamp1.go_home
+
+"================"
+
+puts Vampires.all.inspect
+
+Vampires.sunrise
+
+"=================="
+puts Vampires.all.inspect

@@ -11,7 +11,7 @@ class Zombie
 
   @@default_strength = 3
 
-  attr_accessor :speed :strength
+  attr_accessor :speed, :strength
 
   def initialize(speed, strength)
     @speed = speed
@@ -30,12 +30,12 @@ class Zombie
     survive_attack?
 
     if outrun_zombie? == false && survive_attack? == true
-      new_zombie = Zombie.new(rand(@@max_speed), rand(@@strength))
+      new_zombie = Zombie.new(rand(@@max_speed), rand(@@max_strength))
       @@horde << new_zombie
       p "You became a zombie."
     end
 
-    if outrun_zombie? == true
+    if outrun_zombie? == true && survive_attack? == true
       p "You escaped"
     end
 
@@ -46,7 +46,7 @@ class Zombie
 
   def outrun_zombie?
     speed = rand(@@max_speed)
-    if speed > @speed 
+    if speed > @speed
       true
     else
       false
@@ -54,7 +54,7 @@ class Zombie
   end
 
   def survive_attack?
-    strength = rand(@@strength)
+    strength = rand(@strength)
     if strength > @strength
       true
     else
@@ -68,7 +68,7 @@ class Zombie
 
   def self.new_day
     Zombie.some_die_off
-    Zombie.spawn
+    Zombie.spawn_
     Zombie.increase_plague_level
   end
 
@@ -76,9 +76,9 @@ class Zombie
     @@horde.drop(rand(@@plague_level))
   end
 
-  def self.spawn
+  def self.spawn_
     rand(@@plague_level).times do
-      new_zombie = Zombie.new(rand(@@max_speed), rand(@@strength))
+      new_zombie = Zombie.new(rand(@@max_speed), rand(@@max_strength))
       @@horde << new_zombie
     end
     @@horde
@@ -88,3 +88,32 @@ class Zombie
     @@plague_level += rand(3)
   end
 end
+
+Zombie.increase_plague_level
+
+puts Zombie.all.inspect
+
+Zombie.new_day
+"=========================="
+puts Zombie.all.inspect
+"========================="
+zombie1 = Zombie.all[0]
+zombie2 = Zombie.all[1]
+zombie3 = Zombie.all[2]
+
+"===================="
+puts zombie1.encounter
+puts zombie2.encounter
+puts zombie3.encounter
+"========================"
+Zombie.new_day
+"========================"
+puts Zombie.all.inspect
+"========================="
+zombie1 = Zombie.all[0]
+zombie2 = Zombie.all[1]
+zombie3 = Zombie.all[2]
+"========================="
+puts zombie1.encounter
+puts zombie2.encounter
+puts zombie3.encounter

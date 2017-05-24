@@ -29,17 +29,28 @@ class Vampires
     @@coven
   end
 
+  def self.sunset
+    @@coven.each do |vampire|
+      vampire.in_coffin = false
+      vampire.drank_blood_today =false
+    end
+    @@coven
+  end
+
   def self.all
     @@coven
   end
 end
 #
-# vamp1 = Vampires.create("Mac", 100)
-#
-# vamp2 = Vampires.create("Bob", 100)
-# "====================="
-# puts Vampires.all.inspect
-#
+vamp1 = Vampires.create("Mac", 100)
+
+vamp2 = Vampires.create("Bob", 100)
+"====================="
+puts Vampires.all.inspect
+
+Vampires.sunset
+
+puts Vampires.all.inspect
 # vamp2.drink_blood
 #
 # Vampires.sunrise

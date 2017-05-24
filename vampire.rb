@@ -7,7 +7,7 @@ class Vampires
     @name = name
     @age = age
     @in_coffin = true
-    @drank_blood_today = true
+    @drank_blood_today = false
   end
 
   def drink_blood
@@ -20,4 +20,28 @@ class Vampires
     new_vampire
   end
 
+  def self.sunrise
+    @@coven.each do |vampire|
+      if vampire.in_coffin == false || vampire.drank_blood_today == false
+        @@coven.delete(vampire)
+      end
+    end
+    @@coven
+  end
+
+  def self.all
+    @@coven
+  end
 end
+#
+# vamp1 = Vampires.create("Mac", 100)
+#
+# vamp2 = Vampires.create("Bob", 100)
+# "====================="
+# puts Vampires.all.inspect
+#
+# vamp2.drink_blood
+#
+# Vampires.sunrise
+# "=================="
+# puts Vampires.all.inspect
